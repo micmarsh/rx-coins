@@ -4,7 +4,8 @@ angular.module('theChartsApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'rx'
 ])
   .config ['$routeProvider', ($routeProvider) ->
     $routeProvider
