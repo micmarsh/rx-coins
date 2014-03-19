@@ -29,9 +29,10 @@ angular.module('theChartsApp')
     ltcPrice: (rateObservable) ->
         makeTicker
             observable: rateObservable
-            # BOOOO no CORS
             url: 'http://demo-qznajz.webscript.io/script'
             parse: ['ticker', 'last']
+
+    dogePrice: (rateObservable) -> rx.Observable.return '999'
 
 
   ]
