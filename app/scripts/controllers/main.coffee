@@ -20,19 +20,30 @@ angular.module('theChartsApp')
 
     $scope.currencies = []
     for currency, info of currencies
-        $scope.currencies.push
-            frequency: currency + 'PollFrequency'
-            image: info.image
-            defaultText: info.defaultText
-            price: currency + 'Price'
+        frequency = currency + 'PollFrequency'
+        price = currency + 'Price'
+        {image, defaultText} = info
+        $scope.currencies.push {
+            frequency
+            image
+            price
+        }
+        $scope[price] = defaultText
+        $scope[frequency] = 5
+    # $scope.btcPollFrequency = 5
 
-    $scope.btcPollFrequency = 5
-
-    btcFrequency = $scope.$toObservable('btcPollFrequency')
-   
+    btcFrequency = $scope.$toObservable 'btcPollFrequency'
     prices.btcPrice(btcFrequency) 
     .subscribe (yo) ->
         $scope.btcPrice = yo
         console.log yo
+
+    ltcFrequency = $scope.$toObservable 'ltcPollFrequency'
+    prices.ltcPrice(ltcFrequency)
+    .subscribe (yo) ->
+        $scope.ltcPrice = yo
+        console.log yo
+
+
 
   ]
