@@ -3,11 +3,17 @@
 </div>
 
 <p class="lead">
-  <textarea ng-model="btcPollFrequency"></textarea>
+  <div ng-repeat="coin in currencies">
+    <textarea ng-model="coin.frequency"></textarea>
+    <img class="icon" ng-src="{{coin.image}}">
+    <span ng-bind="{{coin.price}}">{{coin.defaultText}}</span>
+  </div>
+
+<!--   <textarea ng-model="btcPollFrequency"></textarea>
   <img class="icon" src="https://bitcoin.org/img/opengraph.png">
-  <span>{{btcPrice}}</span>
+  <span ng-bind="btcPrice">Bitcoin</span>
   <img class="icon" src="http://cryptocur.com/wp-content/uploads/2012/11/new_litecoin_logo_large.png">    
-  <img class="icon" src="http://foundation.dogecoin.com/img/300coin.png"><br>
+  <img class="icon" src="http://foundation.dogecoin.com/img/300coin.png"><br> -->
 </p>
 
 <div class="row marketing">

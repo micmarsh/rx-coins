@@ -7,6 +7,25 @@ angular.module('theChartsApp')
     console.log $httpProvider.defaults
   .controller 'MainCtrl', ['$scope',  'Prices', ($scope, prices) ->
 
+    currencies = 
+        'btc': 
+            image: "https://bitcoin.org/img/opengraph.png"
+            defaultText: 'Bitcoin'
+        'ltc':
+            image:"http://cryptocur.com/wp-content/uploads/2012/11/new_litecoin_logo_large.png"
+            defaultText: 'Litecoin'
+        'doge':
+            image: "http://foundation.dogecoin.com/img/300coin.png"
+            defaultText: 'Such Crypto'
+
+    $scope.currencies = []
+    for currency, info of currencies
+        $scope.currencies.push
+            frequency: currency + 'PollFrequency'
+            image: info.image
+            defaultText: info.defaultText
+            price: currency + 'Price'
+
     $scope.btcPollFrequency = 5
 
     btcFrequency = $scope.$toObservable('btcPollFrequency')
