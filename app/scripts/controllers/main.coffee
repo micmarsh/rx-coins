@@ -5,23 +5,15 @@ angular.module('theChartsApp')
     $httpProvider.defaults.useXDomain = true
     delete $httpProvider.defaults.headers.common['X-Requested-With']
     console.log $httpProvider.defaults
-  .controller 'MainCtrl', ['$scope',    '$http', 'rx', ($scope,     $http, rx) ->
-
-    COINDESK = "https://api.coindesk.com/v1/bpi/currentprice.json"
+  .controller 'MainCtrl', ['$scope',  'Prices', ($scope, prices) ->
 
     $scope.btcPollFrequency = 5
 
-    $scope.$toObservable('btcPollFrequency')
-    .map ({oldValue, newValue}) ->
-        Number newValue
-    .filter((x) -> x > 0)
-    .flatMapLatest (seconds) ->
-        millis = seconds * 1000
-        rx.Observable.interval millis
-    .flatMap ->
-        price = $http.get(COINDESK)
-        rx.Observable.fromPromise price
+    btcFrequency = $scope.$toObservable('btcPollFrequency')
+   
+    prices.btcPrice(btcFrequency) 
     .subscribe (yo) ->
+        $scope.btcPrice = yo
         console.log yo
 
   ]

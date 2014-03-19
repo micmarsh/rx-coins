@@ -53,6 +53,10 @@ body {
     width: $icon-size;
 }
 
+.lead textarea {
+    width: $icon-size;
+    height: $icon-size/3;
+}
 
 /* Supporting marketing content */
 .marketing {
