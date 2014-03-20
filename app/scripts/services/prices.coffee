@@ -4,15 +4,16 @@ angular.module('theChartsApp')
   .service 'Prices', [ '$http', 'rx', ($http, rx) ->
 
     makeTicker = ({observable, url, parse}) ->
-        observable.map ({oldValue, newValue}) ->
-            Number newValue
+        observable.pluck('newValue')
+        .map(Number)
         .filter((x) -> x > 0)
         .flatMapLatest (seconds) ->
             millis = seconds * 1000
             rx.Observable.interval millis
         .flatMap ->
             promise = $http.get(url)
-            rx.Observable.fromPromise(promise).pluck 'data'
+            rx.Observable.fromPromise(promise)
+            .pluck 'data'
         .map (body) ->
             for key in parse
                 body = body[key]
@@ -32,7 +33,11 @@ angular.module('theChartsApp')
             url: 'http://demo-qznajz.webscript.io/script'
             parse: ['ticker', 'last']
 
-    dogePrice: (rateObservable) -> rx.Observable.return '999'
+    dogePrice: (rateObservable) ->
+        makeTicker
+            observable: rateObservable
+            url: 'https://www.dogeapi.com/wow/v2/?a=get_current_price'
+            parse: ['data', 'amount']
 
 
   ]
