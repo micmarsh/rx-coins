@@ -3,6 +3,13 @@
 angular.module('theChartsApp')
   .service 'Prices', [ '$http', 'rx', ($http, rx) ->
 
+    multiPluck = (keys) -> (object) ->
+        if keys.length <= 0
+            return object
+        else
+            [head, tail...] = keys
+            multiPluck(tail)(object[head])
+
     makeTicker = ({observable, url, parse}) ->
         observable.pluck('newValue')
         .map(Number)
@@ -14,11 +21,7 @@ angular.module('theChartsApp')
             promise = $http.get(url)
             rx.Observable.fromPromise(promise)
             .pluck 'data'
-        .map (body) ->
-            for key in parse
-                body = body[key]
-            return body
-
+        .map multiPluck parse
 
 
     btcPrice: (rateObservable) ->
