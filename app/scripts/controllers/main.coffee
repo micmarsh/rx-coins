@@ -4,7 +4,7 @@ angular.module('theChartsApp')
   .config ($httpProvider) ->
     $httpProvider.defaults.useXDomain = true
     delete $httpProvider.defaults.headers.common['X-Requested-With']
-  .controller 'MainCtrl', ['$scope',  'Prices', ($scope, prices) ->
+  .controller 'MainCtrl', ['$scope',  'Prices', ($scope, priceApis) ->
 
     currencies = 
         'btc': 
@@ -24,19 +24,24 @@ angular.module('theChartsApp')
             priceFn = "#{name}Price" 
 
             coin.frequency = 5
+            coin.name = name
 
             frequency = $scope.$toObservable('coins', _.isEqual)
-            .map((x) -> "nigga #{x}"; x)
             .map(-> coin.frequency)
-            # .subscribe (rate) ->
-            #     coin.price = rate
-            #     console.log "yo: #{rate}"
 
             $scope.coins.push coin
 
-            prices[priceFn](frequency)
+            priceApis[priceFn](frequency)
             .subscribe (rate) ->
                 coin.price = rate
                 console.log "#{priceFn}: #{rate}"
 
+            $scope.$createObservableFunction('clicked')
+            .windowWithCount(2,1)
+            .map((x) -> x.toArray())
+            .subscribe (coins) ->
+                names = coins.map (c) -> c.toUpperCase()
+                prices = coins.map (c) -> 
+                    Number currencies[c].price
+                $scope.rate = "#{names[1]} per #{names[0]} = #{prices[0]/prices[1]}"
   ]

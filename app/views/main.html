@@ -5,31 +5,12 @@
 <p class="lead">
   <div ng-repeat="coin in coins">
     <input type="number" ng-model="coin.frequency">
-    <img class="icon" ng-src="{{coin.image}}">
+    <img class="icon" ng-src="{{coin.image}}" ng-click="clicked(coin.name)">
     <span>{{coin.price}}</span>
   </div>
-
-<!--   <textarea ng-model="btcPollFrequency"></textarea>
-  <img class="icon" src="https://bitcoin.org/img/opengraph.png">
-  <span ng-bind="btcPrice">Bitcoin</span>
-  <img class="icon" src="http://cryptocur.com/wp-content/uploads/2012/11/new_litecoin_logo_large.png">    
-  <img class="icon" src="http://foundation.dogecoin.com/img/300coin.png"><br> -->
 </p>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p> 
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
+<h2>{{rate}}</h2>
 
 <div class="footer">
   <p>♥ from the Yeoman team</p>
