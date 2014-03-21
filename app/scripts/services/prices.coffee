@@ -11,7 +11,7 @@ angular.module('theChartsApp')
             multiPluck(tail)(object[head])
 
     makeTicker = ({observable, url, parse}) ->
-        observable.pluck('newValue')
+        observable
         .map(Number)
         .filter((x) -> x > 0)
         .flatMapLatest (seconds) ->

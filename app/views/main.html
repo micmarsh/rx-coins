@@ -3,10 +3,10 @@
 </div>
 
 <p class="lead">
-  <div ng-repeat="coin in currencies">
-    <textarea ng-model="coin.frequency"></textarea>
+  <div ng-repeat="coin in coins">
+    <input type="number" ng-model="coin.frequency">
     <img class="icon" ng-src="{{coin.image}}">
-    <span ng-bind="{{coin.price}}"></span>
+    <span>{{coin.price}}</span>
   </div>
 
 <!--   <textarea ng-model="btcPollFrequency"></textarea>

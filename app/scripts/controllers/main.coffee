@@ -4,39 +4,39 @@ angular.module('theChartsApp')
   .config ($httpProvider) ->
     $httpProvider.defaults.useXDomain = true
     delete $httpProvider.defaults.headers.common['X-Requested-With']
-    console.log $httpProvider.defaults
   .controller 'MainCtrl', ['$scope',  'Prices', ($scope, prices) ->
 
     currencies = 
         'btc': 
             image: "https://bitcoin.org/img/opengraph.png"
-            defaultText: 'Bitcoin'
+            price: 'Bitcoin'
         'ltc':
             image:"http://cryptocur.com/wp-content/uploads/2012/11/new_litecoin_logo_large.png"
-            defaultText: 'Litecoin'
+            price: 'Litecoin'
         'doge':
             image: "http://foundation.dogecoin.com/img/300coin.png"
-            defaultText: 'Such Crypto'
+            price: 'Such Crypto'
 
-    $scope.currencies = []
-    for currency, info of currencies
-        do (currencies, info) ->
-            frequency = currency + 'PollFrequency'
-            price = currency + 'Price'
-            {image, defaultText} = info
-            $scope.currencies.push {
-                frequency
-                image
-                price
-            }
-            
-            $scope[price] = defaultText
-            $scope[frequency] = 5
+    $scope.coins = []
 
-            frequencyObs = $scope.$toObservable frequency
-            prices[price](frequencyObs)
+    for name, coin of currencies
+        do (name, coin) ->
+            priceFn = "#{name}Price" 
+
+            coin.frequency = 5
+
+            frequency = $scope.$toObservable('coins', _.isEqual)
+            .map((x) -> "nigga #{x}"; x)
+            .map(-> coin.frequency)
+            # .subscribe (rate) ->
+            #     coin.price = rate
+            #     console.log "yo: #{rate}"
+
+            $scope.coins.push coin
+
+            prices[priceFn](frequency)
             .subscribe (rate) ->
-                $scope[price] = rate
-                console.log "#{price}: #{rate}"
+                coin.price = rate
+                console.log "#{priceFn}: #{rate}"
 
   ]
