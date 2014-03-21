@@ -38,10 +38,11 @@ angular.module('theChartsApp')
 
             $scope.$createObservableFunction('clicked')
             .windowWithCount(2,1)
-            .map((x) -> x.toArray())
+            .flatMap((x) -> x.toArray())
             .subscribe (coins) ->
+                console.log coins
                 names = coins.map (c) -> c.toUpperCase()
                 prices = coins.map (c) -> 
                     Number currencies[c].price
-                $scope.rate = "#{names[1]} per #{names[0]} = #{prices[0]/prices[1]}"
+                $scope.rate = "#{names[0]} per #{names[1]} = #{prices[1]/prices[0]}"
   ]
